@@ -18,23 +18,20 @@ class TickController():
     def processTick(pDepthMarketData):
         # important !!! otherwise use the same reference
         tick = deepcopy(pDepthMarketData)
-        print(pDepthMarketData)
+        # print(pDepthMarketData)
         #save ticks of every inst
         TickController.inst_current_tick[tick['InstrumentID']] = tick
         TickController.saveTick(tick)
 
     @staticmethod
     def makeTickFilename(inst):
-        today = time.strftime('%Y%m%d')
-        if not os.path.exists(TICK_DIR+ inst):
-            os.makedirs(TICK_DIR+ inst)
-        return '%s%s/%s_tick.%s' % (TICK_DIR, inst, today, 'txt')
+        return '%s%s.%s' % (TICK_DIR, inst, 'tick')
 
     @staticmethod
     def saveTick(tick):
         f = open(TickController.makeTickFilename(tick['InstrumentID']), 'a+')
         try:
-            f.write('%s,%.2f,%d,%s\n' % (datetime.now(), tick['LastPrice'], tick['Volume'], tick['InstrumentID']))
+            f.write('%s,%.2f,%d,%f\n' % (datetime.now(), tick['LastPrice'], tick['Volume'], tick['AveragePrice']))
         except Exception as err:
             print (err)
         f.close()
@@ -43,6 +40,7 @@ class TickController():
     def saveDayBar():
         for inst in TickController.inst_current_tick.keys():
             tick = TickController.inst_current_tick[inst]
+            print(tick)
             DatabaseController.insert_DayBar(tick)
             #update all indicators!!!
             inst_thread[inst].InitIndicator()

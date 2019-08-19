@@ -47,10 +47,14 @@ class DatabaseController():
     def __init__(self):
         pass
     @staticmethod
-    def insert_DayBar(tick):
+    def insert_DayBar(instrument, tick):
         try:
+            bar_table = instrument+'_Bar'
+            cmd = "CREATE TABLE IF NOT EXISTS " + bar_table \
+          + " (id INTEGER PRIMARY KEY NULL, inst TEXT NULL, open DOUBLE NULL, high DOUBLE NULL, low DOUBLE NULL, close DOUBLE NULL, volume INTEGER NULL, TradingDay TEXT NULL, time TEXT NULL)"
+            conn.execute(cmd)
             conn.execute("INSERT INTO %s (inst, open, high, low, close, volume, TradingDay,time) VALUES ('%s', %f, %f, %f, %f, %d, '%s','%s')"
-                         % (tick['InstrumentID'] + suffix_list[0], tick['InstrumentID'], tick['OpenPrice'], tick['HighestPrice'], tick['LowestPrice'], tick['LastPrice'], tick['Volume'], tick['TradingDay'],tick['UpdateTime']))
+                         % (bar_table, instrument, tick['OpenPrice'], tick['HighestPrice'], tick['LowestPrice'], tick['LastPrice'], tick['Volume'], tick['TradingDay'],tick['UpdateTime']))
             conn.commit()
             #sync memory and database
             #[0] - DayBar [1] - SendOrder [2] - RtnOrder

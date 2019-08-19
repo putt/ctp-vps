@@ -11,12 +11,35 @@ class Usage(Exception):
     def __init__(self, msg):
         self.msg = msg
 
+def dealZhengZhou(symbol):
+    CZCE_INSTRUMENTS = (
+        'sr', 
+        'sm',
+        'sf',
+        'ap',
+        'cj',
+        'cf',
+        'ta',
+        'ma',
+        'rm',
+        'oi',
+        'fg',
+        'zc',
+        'cy',
+        'ur'
+    )
+    if symbol[0].isupper():
+        inst = symbol.lower()
+        # 郑州商品交易所 CZCE TA001 -> ta2001
+        # inst = inst[:-3]+'2'+inst[-3:]
+        return inst
+    return symbol
 
 def start():
     db = sqlite3.connect('futures.db3', check_same_thread = False)
     c = db.execute('SELECT name FROM contract')
 
-    user_md = MdApiPy(instruments=[row[0] for row in c.fetchall()], broker_id=BROKER_ID, investor_id=INVESTOR_ID, passwd=PASSWORD)
+    user_md = MdApiPy(instruments=[dealZhengZhou(row[0]) for row in c.fetchall()], broker_id=BROKER_ID, investor_id=INVESTOR_ID, passwd=PASSWORD)
     user_md.Create(LOGS_DIR +"_md")
     user_md.RegisterFront(ADDR_MD)
     user_md.Init()

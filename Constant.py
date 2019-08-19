@@ -33,16 +33,32 @@ suffix_list = ['_DayBar', '_SendOrder', '_RtnOrder']
 # #仿真
 # BROKER_ID = "9999"
 # INVESTOR_ID = "149302"
-# PASSWORD = "6"
+# PASSWORD = "god98166"
 # ADDR_MD = "tcp://180.168.146.187:10111"
 # AUTH_CODE = "0000000000000000"
 # APP_ID = "simnow_client_test"
 # ADDR_TRADE = "tcp://180.168.146.187:10101"
+# #金石
+BROKER_ID = "0193"
+INVESTOR_ID = "105091"
+PASSWORD = "821210"
+ADDR_MD = "tcp://114.80.55.244:55313"
+# AUTH_CODE = "0000000000000000"
+# APP_ID = "pobo"
+
+# ADDR_TRADE = "tcp://114.80.55.244:55307"
+#CES
+# BROKER_ID = "7070"
+# INVESTOR_ID = "8581100"
+# PASSWORD = "821210"
+# ADDR_MD = "tcp://210.13.65.102:43213"
+# AUTH_CODE = "0000000000000000"
+# APP_ID = "pobo"
+# ADDR_TRADE = "tcp://116.236.239.129:41205"
 
 
 
-
-TICK_DIR = './ticks/'
+TICK_DIR = './data/'
 LOGS_DIR = './logs/'
 
 OPEN,HIGH,LOW,CLOSE = range(4)
