@@ -92,3 +92,4 @@ ENV/
 logs/
 ticks/
 data/
+Constant.py
